@@ -24,6 +24,9 @@ public class BSTNode<T extends Comparable<T>>
 
    public BSTNode(T val, BSTNode<T> l,BSTNode<T> r)
    {
+	   this.val = val;
+	   this.left = l;
+	   this.right = r;
    }
 
 
@@ -33,7 +36,27 @@ public class BSTNode<T extends Comparable<T>>
     */
    public void insert(T target)
    {
+	   /*
+	    if(right == null && target > root.val) {
+		   right = new BSTNode(target);
+	   } else if (left == null && target < root.val) {
+		   left = new BSTNode(target)
+	   }
+	   
+	   if(target > root) {
+		   root = right;
+	   } else if (targer < root) {
+		   root = left;
+	   }
+	    */
+	   if(target > right.val && right == null) {
+		   right = new BSTNode(target);
+	   } 
+	
+	   
+	   
    }
+   
 
 
    /*

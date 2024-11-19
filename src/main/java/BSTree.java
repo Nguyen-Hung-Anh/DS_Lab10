@@ -11,8 +11,7 @@ public class BSTree
 
    public BSTree()
    {
-   
-       
+	   root = null;
    }
 
     /**
@@ -29,6 +28,16 @@ public class BSTree
      */
    public void insert(Integer target)
    {
+	   if(this.isEmpty() == true) 
+	   {
+		   root = new BSTNode<Integer>(target);
+	   }
+	   else 
+	   {
+		   root.insert(target);
+	   }
+	   
+	   
    }
 
 
@@ -38,7 +47,6 @@ public class BSTree
      */
    public Integer retrieve(Integer target)
    {
-	return null;
    }
 
 
