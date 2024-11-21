@@ -36,25 +36,19 @@ public class BSTNode<T extends Comparable<T>>
     */
    public void insert(T target)
    {
-	   /*
-	    if(right == null && target > root.val) {
-		   right = new BSTNode(target);
-	   } else if (left == null && target < root.val) {
-		   left = new BSTNode(target)
-	   }
-	   
-	   if(target > root) {
-		   root = right;
-	   } else if (targer < root) {
-		   root = left;
-	   }
-	    */
-	   if(target > right.val && right == null) {
-		   right = new BSTNode(target);
-	   } 
-	
-	   
-	   
+	   	if (target.compareTo(val) < 0) {
+	        if (left == null) {
+	            left = new BSTNode<>(target);
+	        } else {
+	            left.insert(target);
+	        }
+	    } else if (target.compareTo(val) > 0) {
+	        if (right == null) {
+	            right = new BSTNode<>(target);
+	        } else {
+	            right.insert(target);
+	        }
+	    }
    }
    
 
@@ -63,19 +57,35 @@ public class BSTNode<T extends Comparable<T>>
      Uses recursion to retrieved the value target from the tree.  
      Returns null if it can't find the value.
     */
+   
    public T retrieve(T target)
    {
-	return target;
+	   	if (val.equals(target)) {
+	        return val;
+	    } else if (target.compareTo(val) < 0 && left != null) {
+	        return left.retrieve(target);
+	    } else if (target.compareTo(val) > 0 && right != null) {
+	        return right.retrieve(target);
+	    }
+	    return null; // Not found
    }
 
 
     /**
        If it is present, what level is the node?
        If it is not present, what level would it be placed.
+		
      */
    public int retrieveDepth(T target)
    {
-	return 0;
+	   if (val.equals(target)) {
+	        return 0;
+	    } else if (target.compareTo(val) < 0 && left != null) {
+	        return 1 + left.retrieveDepth(target);
+	    } else if (target.compareTo(val) > 0 && right != null) {
+	        return 1 + right.retrieveDepth(target);
+	    }
+	    return 1; // Depth where it would be added
    }
 
    /**
@@ -83,7 +93,7 @@ public class BSTNode<T extends Comparable<T>>
     */
    public T getLargest()
    {
-	return null;
+	   return (right == null) ? val : right.getLargest();
    }
 
 
@@ -91,11 +101,14 @@ public class BSTNode<T extends Comparable<T>>
       Uses recursion to do an inorder traversals.
       consume is part of a strategy pattern, to determine what the
       "Visit" should be.
+      if(left != null) left.inOrderTraversal
 
     */
    public void inOrderTraversal(Consumer<T> consume)
    {
-
+	   if (left != null) left.inOrderTraversal(consume);
+	   consume.accept(val);
+	   if (right != null) right.inOrderTraversal(consume);
    }
 
 
@@ -110,9 +123,11 @@ public class BSTNode<T extends Comparable<T>>
     */
    public boolean myEquals(BSTNode<T> that)
    {
-	return false;
-   
-
+	   
+	   if (that == null || !val.equals(that.val)) return false;
+	   boolean leftEqual = (left == null) ? that.left == null : left.myEquals(that.left);
+	   boolean rightEqual = (right == null) ? that.right == null : right.myEquals(that.right);
+	   return leftEqual && rightEqual;
    }
 
 }

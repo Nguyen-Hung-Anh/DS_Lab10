@@ -27,17 +27,12 @@ public class BSTree
        inserts target into the tree
      */
    public void insert(Integer target)
-   {
-	   if(this.isEmpty() == true) 
-	   {
-		   root = new BSTNode<Integer>(target);
+   {	   
+	   if (root == null) {
+	       root = new BSTNode<>(target);
+	   } else {
+	       root.insert(target);
 	   }
-	   else 
-	   {
-		   root.insert(target);
-	   }
-	   
-	   
    }
 
 
@@ -47,6 +42,7 @@ public class BSTree
      */
    public Integer retrieve(Integer target)
    {
+	   return (root == null) ? null : root.retrieve(target);
    }
 
 
@@ -60,8 +56,7 @@ public class BSTree
      */
    public int retrieveDepth(Integer target)
    {
-	return 0;
-       
+	   return (root == null) ? 0 : root.retrieveDepth(target);   
    }
 
     
@@ -103,8 +98,7 @@ public class BSTree
     */
    public Integer largest()
    {
-	return null;
-   
+	   return (root == null) ? null : root.getLargest();   
    }
 
 
@@ -128,6 +122,7 @@ public class BSTree
                public void accept(Integer i)
                {
                //need to add some code here...
+            	   list.add(i);
                }
             });
       }
@@ -144,7 +139,16 @@ public class BSTree
      */
    public int sum()
    {
-	return 0;
+	   
+	   final int[] total = {0};
+	   if (root != null) {
+	       root.inOrderTraversal(new Consumer<Integer>() {
+	           public void accept(Integer i) {
+	               total[0] += i;
+	           }
+	       });
+	   }
+	   return total[0];
    }
 
 
@@ -161,13 +165,7 @@ public class BSTree
      */
    public boolean myEquals(BSTree that)
    {
-	return false;
-   
+	   if (that == null || this.root == null) return that.root == null;
+	   return this.root.myEquals(that.root);
    }
-
-
-
-
-
-
 }
